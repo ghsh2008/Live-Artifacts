@@ -1,176 +1,19 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Client Portal</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
-<style>
-:root{--bg:#f6f7f9;--surface:#fff;--fg:#17202a;--muted:#5f6b7a;--line:#dde3ea;--accent:#365f91;--accent-fg:#fff;--soft:#e8eef6;--ok:#1f7a3f;--ok-bg:#e3f2e8;--warn:#8a5a00;--warn-bg:#fbf1d9;--crit:#a52a1f;--crit-bg:#fbe7e4;--info:#2a4f8f;--info-bg:#e5ecf8}
-@media(prefers-color-scheme:dark){:root{--bg:#121519;--surface:#1b2028;--fg:#e8ecf1;--muted:#9aa6b4;--line:#2c343f;--accent:#7fa6d6;--accent-fg:#0d1826;--soft:#1f2b3b;--ok:#6fd08f;--ok-bg:#14301f;--warn:#f0c062;--warn-bg:#3a2d10;--crit:#f08a7e;--crit-bg:#3d1d19;--info:#8fb0ec;--info-bg:#1b2742;color-scheme:dark}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:15px;line-height:1.5}
-.wrap{max-width:900px;margin:0 auto;padding:20px 16px 60px}
-header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:10px;border-bottom:3px solid var(--accent);padding-bottom:10px;margin-bottom:16px}
-.co{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600}
-h1{margin:2px 0 0;font-size:1.5rem}
-.muted{color:var(--muted);font-size:.9rem}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:10px}
-.login{max-width:380px;margin:60px auto}
-input,select,textarea,button{font:inherit}
-input,select,textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg);margin:4px 0 10px}
-button{padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font-weight:600;cursor:pointer}
-button.p{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
-button.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
-button.no{background:var(--crit-bg);color:var(--crit);border-color:var(--crit-bg)}
-.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
-.tab{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-weight:500;cursor:pointer}
-.tab[aria-selected=true]{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
-.tab .n{opacity:.8;margin-left:4px}
-.badge{font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap}
-.b-pending{background:var(--warn-bg);color:var(--warn)}.b-approved{background:var(--ok-bg);color:var(--ok)}.b-rejected{background:var(--crit-bg);color:var(--crit)}.b-done{background:var(--info-bg);color:var(--info)}
-.top{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.title{font-weight:600;flex:1}.amt{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
-.detail{color:var(--muted);font-size:.92rem;margin:6px 0 0;white-space:pre-wrap}
-.btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-.report{white-space:pre-wrap;font-size:.92rem}
-.sel{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.sel select{width:auto;margin:0}
-.err{color:var(--crit);font-size:.9rem;min-height:1.2em}
-.empty{color:var(--muted);padding:20px;text-align:center}
-a{color:var(--accent)}
-table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600}
-td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}td.nm{unicode-bidi:plaintext}tr.left td{opacity:.55}
-.tblwrap{overflow-x:auto}.ccy{margin:14px 0 6px;font-weight:600;display:flex;justify-content:space-between;align-items:baseline}.ccy .tot{font-variant-numeric:tabular-nums}
-.banner{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 14px;border-radius:10px;margin-bottom:10px}.banner.draft{background:var(--warn-bg);color:var(--warn)}.banner.approved{background:var(--ok-bg);color:var(--ok)}.banner .sp{flex:1}
-.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:8px}.form label{font-size:.8rem;color:var(--muted)}.form input,.form textarea{margin:2px 0 0}.form .full{grid-column:1/-1}
-button.sm{padding:4px 10px;font-size:.82rem;font-weight:500}
-.log{font-size:.88rem}.log div{padding:6px 0;border-bottom:1px solid var(--line)}
-</style></head><body><div class="wrap" id="app"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js"></script>
+<style>body{margin:0;background:#f6f7f9;color:#5f6b7a;font:15px system-ui,sans-serif;display:flex;min-height:100vh;align-items:center;justify-content:center}@media(prefers-color-scheme:dark){body{background:#121519;color:#9aa6b4}}</style>
+</head><body><div id="boot">Loading…</div>
 <script>
-const sb = supabase.createClient('https://vuqydfqlfnzfwsosbrmo.supabase.co', "sb_publishable_s2UGFZt4qRq1Jgvs86RYFA_N5nxYmz8");
-const app = document.getElementById('app');
-const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const fmt = (n, c) => n == null ? '' : (c ? c + ' ' : '') + Number(n).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-const dt = s => s ? new Date(s).toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'}) : '';
-let state = { user: null, companies: [], company: null, tab: 'pending', items: [], runs: [], files: [], hr: [], hrLog: [], hrMonth: null, hrOpen: null };
-// Items are written for the accountant; show them to clients in a neutral voice.
-const neutral = s => String(s ?? '').replace(/لو وافقتي هعمل:/g, 'عند الموافقة:').replace(/لو وافقتي/g, 'عند الموافقة').replace(/لحد ردك/g, 'لحين الرد').replace(/\bهعمل\b/g, 'سيتم');
-const monthKey = d => d.toISOString().slice(0, 7) + '-01';
-const monthLabel = s => new Date(s).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
-const isHR = co => co && ['hr', 'owner', 'accountant'].includes(co.role);
-
-function loginView(msg) {
-  app.innerHTML = `<div class="card login"><div class="co">Client portal</div><h1>Sign in</h1>
-  <p class="muted">Use the email your accountant invited.</p>
-  <form id="f"><label>Email<input id="email" type="email" required autocomplete="username"></label>
-  <label>Password<input id="pw" type="password" required autocomplete="current-password"></label>
-  <div class="err" id="err">${esc(msg || '')}</div><button class="p" type="submit">Sign in</button>
-  <p class="muted" style="margin-top:12px"><a href="#" id="forgot">Forgot password?</a></p></form></div>`;
-  document.getElementById('f').onsubmit = async e => { e.preventDefault();
-    const { error } = await sb.auth.signInWithPassword({ email: email.value.trim(), password: pw.value });
-    if (error) document.getElementById('err').textContent = error.message; else boot(); };
-  document.getElementById('forgot').onclick = async e => { e.preventDefault(); const em = email.value.trim(); if (!em) return (document.getElementById('err').textContent = 'Type your email first.');
-    const { error } = await sb.auth.resetPasswordForEmail(em, { redirectTo: location.href.split('#')[0] });
-    document.getElementById('err').textContent = error ? error.message : 'Check your email for a reset link.'; };
-}
-function setPasswordView() {
-  app.innerHTML = `<div class="card login"><div class="co">Client portal</div><h1>Set your password</h1>
-  <form id="f"><label>New password<input id="pw" type="password" minlength="8" required autocomplete="new-password"></label>
-  <div class="err" id="err"></div><button class="p" type="submit">Save and continue</button></form></div>`;
-  document.getElementById('f').onsubmit = async e => { e.preventDefault();
-    const { error } = await sb.auth.updateUser({ password: pw.value });
-    if (error) document.getElementById('err').textContent = error.message; else { history.replaceState(null, '', location.pathname); boot(); } };
-}
-async function rpc(fn, args) { const { data, error } = await sb.rpc(fn, args); if (error) throw error; return data; }
-async function load() {
-  const c = state.company; if (!c) return;
-  const co = state.companies.find(x => x.company === c);
-  if (co.role === 'hr') { state.items = []; state.runs = []; state.files = []; }
-  else [state.items, state.runs, state.files] = await Promise.all([rpc('portal_items', { p_company: c }), rpc('portal_runs', { p_company: c, p_limit: 10 }), rpc('portal_files', { p_company: c })]);
-  state.hr = []; state.hrLog = [];
-  if (isHR(co)) { if (!state.hrMonth) state.hrMonth = monthKey(new Date());
-    try { [state.hr, state.hrLog] = await Promise.all([rpc('portal_hr_payroll', { p_company: c, p_month: state.hrMonth }), rpc('portal_hr_log', { p_company: c, p_limit: 60 })]); } catch (e) { state.hr = []; } }
-  if (co.role === 'hr' || (state.tab === 'payroll' && !state.hr.length && co.role !== 'hr')) state.tab = co.role === 'hr' ? 'payroll' : 'pending';
-  render();
-}
-function payrollView(co) {
-  const rows = state.hr; if (!rows.length && co.role !== 'hr') return '';
-  const months = []; for (let i = 0; i < 8; i++) { const d = new Date(); d.setUTCDate(1); d.setUTCMonth(d.getUTCMonth() - i + 1); months.push(monthKey(d)); }
-  const st = rows[0]?.month_status || 'draft', locked = st === 'approved';
-  const canApprove = ['hr', 'owner'].includes(co.role) && !locked, canReopen = co.role === 'accountant' && locked, canEdit = !locked;
-  const banner = locked ? `<div class="banner approved"><strong>Approved</strong><span>by ${esc(rows[0].approved_by)} on ${dt(rows[0].approved_at)} — salaries can be released.</span><span class="sp"></span>${canReopen ? '<button class="sm" id="reopen">Reopen month</button>' : ''}</div>`
-    : `<div class="banner draft"><strong>Draft</strong><span>Review the sheet, make any changes, then give final approval.</span><span class="sp"></span>${canApprove ? '<button class="ok" id="approve">Approve this month</button>' : ''}</div>`;
-  const net = r => r.pay_ccy === 'USD' ? r.net_usd : r.pay_ccy === 'AED' ? r.net_aed : r.net_iqd;
-  const groups = ['USD', 'IQD', 'AED'].filter(c => rows.some(r => r.pay_ccy === c));
-  const tables = groups.map(c => { const g = rows.filter(r => r.pay_ccy === c); const tot = g.reduce((s, r) => s + Number(net(r) || 0), 0);
-    return `<div class="ccy"><span>Paid in ${c} · ${g.length} employees</span><span class="tot">${fmt(tot, c)}</span></div><div class="tblwrap"><table><thead><tr><th>#</th><th>Employee</th><th>Position</th><th class="num">Basic</th><th class="num">Days</th><th class="num">Bonus</th><th class="num">Deduction</th><th class="num">Loan this month</th><th class="num">Loan remaining</th><th class="num">Net ${c}</th>${canEdit ? '<th></th>' : ''}</tr></thead><tbody>
-    ${g.map(r => `<tr class="${r.leave_date ? 'left' : ''}" data-row="${r.emp_id}"><td>${r.emp_no}</td><td class="nm">${esc(r.name)}${r.leave_date ? ` <span class="badge b-rejected">left ${dt(r.leave_date)}</span>` : ''}${r.note ? `<div class="muted" style="font-size:.8rem">${esc(r.note)}</div>` : ''}</td><td class="nm">${esc(r.job || '')}</td><td class="num">${fmt(r.basic, r.basic_ccy)}</td><td class="num">${r.days_worked}</td><td class="num">${r.bonus ? fmt(r.bonus) : ''}</td><td class="num">${r.other_deduction ? fmt(r.other_deduction) : ''}</td><td class="num">${r.loan_deduction_usd ? fmt(r.loan_deduction_usd, 'USD') : ''}</td><td class="num">${r.loan_remaining_usd ? fmt(r.loan_remaining_usd, 'USD') : ''}</td><td class="num"><strong>${fmt(net(r))}</strong></td>${canEdit ? `<td><button class="sm" data-edit="${r.emp_id}">Edit</button></td>` : ''}</tr>
-    ${state.hrOpen === r.emp_id ? `<tr><td colspan="11"><form class="form" data-adj="${r.emp_id}">
-      <label>Days worked (of 30)<input name="days" type="number" min="0" max="31" value="${r.days_worked}"></label><label>Bonus (${r.basic_ccy})${r.bonus_fixed ? ` — fixed ${fmt(r.bonus_fixed)} is added automatically` : ''}<input name="bonus" type="number" step="0.01" value="${r.adj_bonus ?? ''}"></label><label>Other deduction (${r.basic_ccy})<input name="ded" type="number" step="0.01" value="${r.other_deduction || ''}"></label>
-      <label>Leave date (if the employee left)<input name="leave" type="date" value="${r.leave_date || ''}"></label><label class="full">Note on the payslip<input name="note" value="${esc(r.note || '')}"></label>
-      <label class="full">Reason for this change (required, goes to the log)<input name="reason" required placeholder="e.g. 5 days unpaid leave in October"></label>
-      <div class="full btns"><button class="p" type="submit">Save</button><button type="button" data-cancel="1">Cancel</button></div></form></td></tr>` : ''}`).join('')}</tbody></table></div>`; }).join('');
-  const add = canEdit ? `<details class="card" style="margin-top:14px"><summary style="cursor:pointer;font-weight:600">Add a new employee</summary><form class="form" id="addemp">
-    <label>Full name<input name="name" required></label><label>Position<input name="job" required></label><label>Project / department<input name="project"></label><label>Joining date<input name="join" type="date" required></label>
-    <label class="full">Reason / note (required)<input name="reason" required placeholder="e.g. new driver for the Basra project, salary agreed 1,000,000 IQD"></label>
-    <div class="full btns"><button class="p" type="submit">Add</button></div><p class="muted full" style="margin:0">The basic salary is set by the accountant after you add the employee — write the agreed amount in the note.</p></form></details>` : '';
-  const log = state.hrLog.length ? `<details class="card" style="margin-top:10px"><summary style="cursor:pointer;font-weight:600">Change log (${state.hrLog.length})</summary><div class="log">${state.hrLog.map(l => `<div><span class="muted">${new Date(l.changed_at).toLocaleString('en-GB')}</span> · <strong>${esc(l.changed_by)}</strong> · ${l.emp_name ? '<span class="nm">' + esc(l.emp_name) + '</span> · ' : ''}${esc(l.field)}${l.old_value != null ? ': ' + esc(l.old_value) + ' → ' : ': '}${esc(l.new_value ?? '')}${l.reason ? ' <span class="muted">(' + esc(l.reason) + ')</span>' : ''}</div>`).join('')}</div></details>` : '';
-  return `<div class="sel" style="margin-bottom:10px"><label>Month <select id="hrm">${months.map(m => `<option value="${m}" ${m === state.hrMonth ? 'selected' : ''}>${monthLabel(m)}</option>`).join('')}</select></label><span class="muted">Salaries are confidential — visible only to the manager and the accountant.</span></div>${banner}${rows.length ? tables : '<div class="empty">No payroll data for this month.</div>'}${add}${log}`;
-}
-function wirePayroll(co) {
-  const m = document.getElementById('hrm'); if (m) m.onchange = () => { state.hrMonth = m.value; state.hrOpen = null; load(); };
-  app.querySelectorAll('[data-edit]').forEach(b => b.onclick = () => { state.hrOpen = Number(b.dataset.edit); render(); });
-  app.querySelectorAll('[data-cancel]').forEach(b => b.onclick = () => { state.hrOpen = null; render(); });
-  app.querySelectorAll('form[data-adj]').forEach(f => f.onsubmit = async e => { e.preventDefault(); const d = new FormData(f); const id = Number(f.dataset.adj); const row = state.hr.find(r => r.emp_id === id);
-    try { await rpc('portal_hr_adjust', { p_company: state.company, p_month: state.hrMonth, p_emp_id: id, p_days: Number(d.get('days')), p_bonus: d.get('bonus') === '' ? null : Number(d.get('bonus')), p_deduction: d.get('ded') === '' ? null : Number(d.get('ded')), p_note: d.get('note') || null, p_reason: d.get('reason') });
-      const lv = d.get('leave') || null; if (lv !== (row.leave_date || null)) await rpc('portal_hr_employee', { p_company: state.company, p_emp_id: id, p_name: null, p_job: null, p_project: null, p_join: null, p_leave: lv, p_reason: d.get('reason') });
-      state.hrOpen = null; await load(); } catch (err) { alert('Could not save: ' + err.message); } });
-  const a = document.getElementById('addemp'); if (a) a.onsubmit = async e => { e.preventDefault(); const d = new FormData(a);
-    try { await rpc('portal_hr_employee', { p_company: state.company, p_emp_id: null, p_name: d.get('name'), p_job: d.get('job'), p_project: d.get('project') || null, p_join: d.get('join'), p_leave: null, p_reason: d.get('reason') }); await load(); } catch (err) { alert('Could not add: ' + err.message); } };
-  const ap = document.getElementById('approve'); if (ap) ap.onclick = async () => { if (!confirm('Approve ' + monthLabel(state.hrMonth) + ' salaries? The sheet will be locked and marked ready for payment.')) return;
-    try { await rpc('portal_hr_approve', { p_company: state.company, p_month: state.hrMonth, p_approve: true, p_note: null }); await load(); } catch (err) { alert(err.message); } };
-  const ro = document.getElementById('reopen'); if (ro) ro.onclick = async () => { const why = prompt('Reason for reopening this month:'); if (why === null) return;
-    try { await rpc('portal_hr_approve', { p_company: state.company, p_month: state.hrMonth, p_approve: false, p_note: why }); await load(); } catch (err) { alert(err.message); } };
-}
-function itemCard(i, actions) {
-  const st = i.executed_at ? 'done' : i.status;
-  return `<div class="card"><div class="top"><span class="badge b-${st}">${st}</span><span class="title">${esc(i.title)}</span>${i.amount != null ? `<span class="amt">${fmt(i.amount, i.currency)}</span>` : ''}</div>
-  <div class="detail">${esc(neutral(i.detail))}</div>
-  <div class="muted" style="margin-top:6px">${dt(i.created_at)}${i.comment ? ' · Note: ' + esc(i.comment) : ''}${i.result ? ' · ' + esc(String(i.result).slice(0, 160)) : ''}</div>
-  ${actions ? `<div class="btns"><button class="ok" data-ok="${i.id}">Approve</button><button class="no" data-no="${i.id}">Reject</button><button data-c="${i.id}">Add a note</button></div>` : ''}</div>`;
-}
-function render() {
-  const co = state.companies.find(x => x.company === state.company);
-  const pend = state.items.filter(i => i.status === 'pending'), done = state.items.filter(i => i.status !== 'pending');
-  const showHR = isHR(co) && (state.hr.length || co.role === 'hr');
-  const tabs = co.role === 'hr' ? [['payroll', 'Payroll', state.hr.length]] : [['pending', 'Needs your decision', pend.length], ['history', 'Decided', done.length], ['reports', 'Reports', state.runs.length], ['files', 'Files', state.files.length], ...(showHR ? [['payroll', 'Payroll', state.hr.length]] : [])];
-  let body = '';
-  if (state.tab === 'payroll') body = payrollView(co);
-  if (state.tab === 'pending') body = pend.length ? pend.map(i => itemCard(i, co.role !== 'staff')).join('') : '<div class="empty">Nothing waiting for you. Your books are up to date.</div>';
-  if (state.tab === 'history') body = done.length ? done.map(i => itemCard(i, false)).join('') : '<div class="empty">No decisions yet.</div>';
-  if (state.tab === 'reports') body = state.runs.length ? state.runs.map(r => `<div class="card"><div class="top"><span class="badge b-done">${esc(r.kind)}</span><span class="title">${dt(r.run_date)}</span></div><div class="report" style="margin-top:8px">${esc(r.report)}</div></div>`).join('') : '<div class="empty">No reports yet.</div>';
-  if (state.tab === 'files') body = state.files.length ? state.files.map(f => `<div class="card"><div class="top"><span class="title">${esc(f.name)}</span><button data-f="${f.id}">Download</button></div><div class="muted">${dt(f.created_at)}${f.note ? ' · ' + esc(f.note) : ''}</div></div>`).join('') : '<div class="empty">No files yet.</div>';
-  app.innerHTML = `<header><div><div class="co">Client portal</div><h1>${esc(co.name)}</h1></div>
-    <div class="sel">${state.companies.length > 1 ? `<select id="co">${state.companies.map(c => `<option value="${c.company}" ${c.company === state.company ? 'selected' : ''}>${esc(c.name)}</option>`).join('')}</select>` : ''}<span class="muted">${esc(state.user.email)}</span><button id="out">Sign out</button></div></header>
-    <div class="tabs">${tabs.map(([k, l, n]) => `<button class="tab" aria-selected="${state.tab === k}" data-t="${k}">${l}<span class="n">${n}</span></button>`).join('')}</div>${body}`;
-  app.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { state.tab = b.dataset.t; render(); });
-  const sel = document.getElementById('co'); if (sel) sel.onchange = () => { state.company = sel.value; load(); };
-  document.getElementById('out').onclick = async () => { await sb.auth.signOut(); loginView(); };
-  app.querySelectorAll('[data-ok]').forEach(b => b.onclick = () => decide(b.dataset.ok, 'approved'));
-  app.querySelectorAll('[data-no]').forEach(b => b.onclick = () => decide(b.dataset.no, 'rejected', askNote(b)));
-  app.querySelectorAll('[data-c]').forEach(b => b.onclick = () => { const card = b.closest('.card'); if (card.querySelector('textarea')) return; const ta = document.createElement('textarea'); ta.placeholder = 'Your note for the accountant'; ta.rows = 2; card.appendChild(ta); ta.focus(); });
-  app.querySelectorAll('[data-f]').forEach(b => b.onclick = async () => { try { const r = await rpc('portal_file_url', { p_file: Number(b.dataset.f) }); window.open(r.url, '_blank'); } catch (e) { alert(e.message); } });
-  if (state.tab === 'payroll') wirePayroll(co);
-}
-function askNote(btn) { const ta = btn.closest('.card').querySelector('textarea'); return ta ? ta.value.trim() : null; }
-async function decide(id, status, note) {
-  try { const btn = app.querySelector(`[data-ok="${id}"]`); const n = note ?? (btn ? askNote(btn) : null); await rpc('portal_decide', { p_item: Number(id), p_status: status, p_comment: n || null }); await load(); }
-  catch (e) { alert('Could not save: ' + e.message); }
-}
-async function boot() {
-  if (location.hash.includes('type=recovery') || location.hash.includes('type=invite')) { const { data } = await sb.auth.getSession(); if (data.session) return setPasswordView(); }
-  const { data: { user } } = await sb.auth.getUser();
-  if (!user) return loginView();
-  state.user = user;
-  try { state.companies = await rpc('portal_my_companies', {}); } catch (e) { return loginView(e.message); }
-  if (!state.companies.length) { app.innerHTML = '<div class="card login"><h1>No company linked</h1><p class="muted">Your account is not linked to a company yet. Please contact your accountant.</p><button id="out">Sign out</button></div>'; document.getElementById('out').onclick = async () => { await sb.auth.signOut(); loginView(); }; return; }
-  state.company = state.companies[0].company; await load();
-}
-sb.auth.onAuthStateChange((ev) => { if (ev === 'PASSWORD_RECOVERY') setPasswordView(); });
-boot();
+// Loader: the portal app is published to Supabase storage by the accountant's agent; this page only fetches and runs it,
+// so updates never need a GitHub change. The hash (auth tokens) stays in the URL because document.write keeps the location.
+(async () => {
+  const src = 'https://vuqydfqlfnzfwsosbrmo.supabase.co/storage/v1/object/public/portal/app.html?v=' + Math.floor(Date.now() / 60000);
+  try {
+    const r = await fetch(src, { cache: 'no-store' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const html = await r.text();
+    document.open(); document.write(html); document.close();
+  } catch (e) {
+    document.getElementById('boot').textContent = 'The portal could not load (' + e.message + '). Please refresh in a minute or contact your accountant.';
+  }
+})();
 </script></body></html>
