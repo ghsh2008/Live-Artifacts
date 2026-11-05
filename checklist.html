@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Open Items</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one working column, sticky progress bar. This file holds no client data: the list loads with the secret token in the link. */
+:root{
+  --bg:#f3f6f7;--surface:#ffffff;--fg:#14262c;--muted:#566a71;--line:#d4dee1;
+  --accent:#0d5c6b;--accent-fg:#ffffff;--accent-soft:#dcecef;
+  --good:#17693f;--good-soft:#dcefe3;--warn:#8a5a00;--warn-soft:#f6ead0;--bad:#a12f2f;--bad-soft:#f7e0de;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#10191c;--surface:#172429;--fg:#e4edef;--muted:#9db0b6;--line:#2c3d43;
+  --accent:#5cbccb;--accent-fg:#08242a;--accent-soft:#1c3a42;
+  --good:#7fd3a0;--good-soft:#1b3a2a;--warn:#e6bd6c;--warn-soft:#3e3119;--bad:#f0a29c;--bad-soft:#452322;
+  color-scheme:dark}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:16px;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{padding-block:28px 20px}
+h1{font-size:1.75rem;line-height:1.2;margin:0 0 6px;text-wrap:balance}
+.sub{color:var(--muted);margin:0;max-width:62ch}
+.bar{position:sticky;top:0;z-index:5;background:var(--surface);border-block:1px solid var(--line)}
+.bar .wrap{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;padding-block:10px}
+.count{font-weight:600;font-variant-numeric:tabular-nums}
+.track{flex:1 1 140px;height:8px;border-radius:4px;background:var(--accent-soft);overflow:hidden;min-width:100px}
+.fill{height:100%;width:0;background:var(--accent);transition:width .25s}
+.save{color:var(--muted);font-size:.875rem}
+main{display:grid;gap:24px;padding-block:24px 56px}
+.notice{padding:10px 14px;background:var(--warn-soft);color:var(--warn);border-radius:6px}
+.filters{display:flex;gap:4px;flex-wrap:wrap}
+button,.filebtn{font:inherit;font-weight:500;color:var(--accent);background:transparent;border:1px solid var(--accent);border-radius:6px;padding:6px 12px;cursor:pointer;display:inline-block}
+.filters button{border-color:var(--line);color:var(--muted)}
+.filters button[aria-pressed=true]{background:var(--accent-soft);color:var(--fg);border-color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+#list{display:grid;gap:28px}
+section.group{display:grid;gap:10px}
+h2{font-size:1.125rem;margin:0}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:grid;gap:10px}
+.item.isdone{background:transparent}
+.head{display:grid;grid-template-columns:auto 2rem minmax(0,1fr) auto;gap:10px;align-items:start}
+.head input{width:20px;height:20px;margin:3px 0 0;accent-color:var(--accent)}
+.num{font-family:var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.title{font-weight:600;display:block}
+.ask{margin:2px 0 0;color:var(--muted);font-size:.9375rem}
+.amt{font-family:var(--mono);font-size:.875rem;white-space:nowrap}
+.pill{font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap;background:var(--accent-soft);color:var(--fg)}
+.pill.done{background:var(--good-soft);color:var(--good)}
+.pill.prog{background:var(--warn-soft);color:var(--warn)}
+.pill.more{background:var(--bad-soft);color:var(--bad)}
+label.f{font-weight:500;font-size:.875rem;display:block;margin-bottom:4px}
+textarea{width:100%;min-height:68px;resize:vertical;font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px}
+.files{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.file{font-size:.875rem;overflow-wrap:anywhere;color:var(--good)}
+.filebtn input{position:absolute;opacity:0;width:1px;height:1px}
+.filebtn:focus-within{outline:2px solid var(--accent);outline-offset:1px}
+.ferr{color:var(--bad);font-size:.875rem}
+.rnote{color:var(--bad);font-size:.9375rem}
+@media (max-width:520px){.head{grid-template-columns:auto 1.8rem minmax(0,1fr)}.head .pill{grid-column:3;justify-self:start}}
+@media (prefers-reduced-motion:reduce){.fill{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap"><header class="top">
+  <h1 id="h">Open items</h1>
+  <p class="sub">Type your answer under each item and tick it when it is done. For paper, take a clear photo and upload it. Everything saves by itself, and you can come back to this link at any time.</p>
+</header></div>
+<div class="bar"><div class="wrap">
+  <span class="count" id="count"></span>
+  <div class="track" aria-hidden="true"><div class="fill" id="fill"></div></div>
+  <span class="save" id="save" role="status">Loading...</span>
+</div></div>
+<main class="wrap">
+  <div class="notice" id="notice" hidden></div>
+  <div class="filters" id="filters" role="group" aria-label="Show items" hidden>
+    <button type="button" data-f="all" aria-pressed="true">All</button>
+    <button type="button" data-f="todo" aria-pressed="false">Still to do</button>
+    <button type="button" data-f="done" aria-pressed="false">Done</button>
+  </div>
+  <div id="list"></div>
+</main>
+<script>
+const API="https://vuqydfqlfnzfwsosbrmo.supabase.co/functions/v1/client-checklist";
+const token=location.hash.slice(1);
+const S={items:[],filter:"all"},E={},timers={},busy={},dirty={};
+const $=id=>document.getElementById(id);
+function el(t,c,x){const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+async function call(body){
+  const r=await fetch(API,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({token,...body})});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(j.error||"Something went wrong. Please try again.");
+  return j;
+}
+function fail(m){const n=$("notice");n.textContent=m;n.hidden=false}
+function isDone(i){return i.review_state==="accepted"||(i.done&&i.review_state!=="more")}
+function status(i){
+  if(i.review_state==="accepted")return["Accepted","done"];
+  if(i.review_state==="more")return["Needs more","more"];
+  if(i.done)return["Done","done"];
+  if(i.answer.trim()||i.files.length)return["In progress","prog"];
+  return["To do",""];
+}
+function paint(){
+  let n=0;
+  S.items.forEach(i=>{const e=E[i.n],[t,c]=status(i),d=isDone(i);if(d)n++;
+    e.pill.textContent=t;e.pill.className="pill "+c;e.it.classList.toggle("isdone",d);
+    e.it.hidden=(S.filter==="todo"&&d)||(S.filter==="done"&&!d)});
+  document.querySelectorAll("section.group").forEach(s=>{s.hidden=![...s.querySelectorAll(".item")].some(x=>!x.hidden)});
+  $("count").textContent=n+" of "+S.items.length+" done";
+  $("fill").style.width=(S.items.length?n/S.items.length*100:0)+"%";
+}
+function schedule(i,now){$("save").textContent="Saving...";clearTimeout(timers[i.n]);timers[i.n]=setTimeout(()=>flush(i),now?0:800)}
+async function flush(i){
+  if(busy[i.n]){dirty[i.n]=true;return}
+  busy[i.n]=true;
+  try{do{dirty[i.n]=false;await call({action:"save",n:i.n,done:i.done,answer:i.answer})}while(dirty[i.n]);
+    if(!Object.keys(busy).some(k=>busy[k]&&k!=i.n))$("save").textContent="Saved";}
+  catch(e){$("save").textContent="Not saved";fail("Your last change was not saved. Check your connection and try again.")}
+  busy[i.n]=false;
+}
+function showFiles(i){const b=E[i.n].flist;b.replaceChildren(...i.files.map(f=>el("span","file","✓ "+f.name)))}
+function b64(file){return new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(String(r.result).split(",")[1]);r.onerror=no;r.readAsDataURL(file)})}
+async function upload(i,list){
+  const e=E[i.n];e.ferr.textContent="";
+  for(const f of list){
+    if(f.size>15*1024*1024){e.ferr.textContent=f.name+" is larger than 15 MB.";continue}
+    e.status.textContent="Uploading "+f.name+"...";
+    try{const j=await call({action:"upload",n:i.n,name:f.name,b64:await b64(f)});i.files=j.files;showFiles(i);paint()}
+    catch(x){e.ferr.textContent=f.name+": "+x.message}
+  }
+  e.status.textContent="";$("save").textContent="Saved";
+}
+function item(i){
+  const it=el("article","item"),head=el("div","head");
+  const cb=document.createElement("input");cb.type="checkbox";cb.id="d"+i.n;cb.checked=i.done;
+  const num=String(i.n).padStart(2,"0"),txt=el("div");txt.style.minWidth="0";
+  const tl=el("label","title",i.title);tl.htmlFor=cb.id;
+  txt.append(tl,el("p","ask",i.ask));
+  if(i.amount)txt.append(el("div","amt","SAR "+i.amount));
+  const pill=el("span","pill");
+  head.append(cb,el("span","num",num),txt,pill);
+  const w=el("div"),al=el("label","f","Your answer");al.htmlFor="a"+i.n;
+  const ta=document.createElement("textarea");ta.id="a"+i.n;ta.value=i.answer;ta.maxLength=5000;w.append(al,ta);
+  it.append(head);
+  if(i.review_note)it.append(el("div","rnote",i.review_note));
+  it.append(w);
+  const row=el("div","files"),flist=el("span","files"),st=el("span","save"),ferr=el("span","ferr");
+  const fb=el("label","filebtn","Upload file or photo"),inp=document.createElement("input");
+  inp.type="file";inp.multiple=true;inp.accept="image/*,.pdf,.xls,.xlsx,.doc,.docx,.csv";inp.setAttribute("aria-label","Upload for item "+num);
+  fb.append(inp);row.append(fb,flist,st,ferr);it.append(row);
+  E[i.n]={it,pill,flist,status:st,ferr};
+  cb.addEventListener("change",()=>{i.done=cb.checked;paint();schedule(i,true)});
+  ta.addEventListener("input",()=>{i.answer=ta.value;paint();schedule(i)});
+  inp.addEventListener("change",()=>{const l=[...inp.files];inp.value="";upload(i,l)});
+  showFiles(i);
+  return it;
+}
+$("filters").addEventListener("click",e=>{const f=e.target.dataset.f;if(!f)return;S.filter=f;
+  [...$("filters").children].forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.f===f)));paint()});
+(async()=>{
+  if(!token){$("save").textContent="";fail("This link is not complete. Please use the full link you received.");return}
+  try{
+    const j=await call({action:"get"});
+    S.items=j.items;$("h").textContent=j.title;document.title=j.title;
+    const groups=[...new Set(S.items.map(i=>i.grp))],list=$("list");
+    groups.forEach(g=>{const s=el("section","group");s.append(el("h2",null,g));
+      S.items.filter(i=>i.grp===g).forEach(i=>s.append(item(i)));list.append(s)});
+    $("filters").hidden=false;$("save").textContent="";paint();
+  }catch(e){$("save").textContent="";fail(e.message)}
+})();
+</script>
+</body>
+</html>
